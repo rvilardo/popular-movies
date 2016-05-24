@@ -15,15 +15,17 @@ import com.squareup.picasso.Picasso;
 import org.rvilardo.android.popularmovies.R;
 import org.rvilardo.android.popularmovies.async.FetchMovieDetailTask;
 import org.rvilardo.android.popularmovies.bean.Movie;
+import org.rvilardo.android.popularmovies.bean.MovieDetail;
+import org.rvilardo.android.popularmovies.bean.MovieDetailListener;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
  */
-public class MovieDetailFragment extends Fragment {
+public class MovieDetailFragment extends Fragment implements MovieDetailListener {
 
     private final String LOG_TAG = MovieDetailFragment.class.getSimpleName();
-    private Movie movieSelected;
+    private MovieDetail movieSelected = new MovieDetail();
 
     public static final String MOVIE = "MOVIE";
 
@@ -35,11 +37,14 @@ public class MovieDetailFragment extends Fragment {
 
         Intent intent = getActivity().getIntent();
         if (intent != null && intent.hasExtra(MOVIE)) {
-            movieSelected = (Movie) intent.getSerializableExtra(MOVIE);
+            Movie movie = (Movie) intent.getSerializableExtra(MOVIE);
+            movieSelected.setId(movie.getId());
+            movieSelected.setPosterPath(movie.getPosterPath());
+
             ((TextView) rootView.findViewById(R.id.detail_text)).setText(movieSelected.getId().toString());
             Log.v(LOG_TAG, "movieIdSelected =" + movieSelected.getId().toString());
 
-            new FetchMovieDetailTask().execute(movieSelected.getId());
+            new FetchMovieDetailTask(this).execute(movieSelected.getId());
 
             Picasso.with(getContext()).load("http://image.tmdb.org/t/p/w342" + movieSelected.getPosterPath()).placeholder(R.mipmap.ic_launcher).into(
                     (ImageView) rootView.findViewById(R.id.movie_item_detail_image_view)
@@ -47,5 +52,11 @@ public class MovieDetailFragment extends Fragment {
         }
 
         return rootView;
+    }
+
+
+    @Override
+    public void onMovieDetailLoaded(MovieDetail movieDetail) {
+        Log.v(LOG_TAG, "movieDetail=" + movieDetail.getOriginalTitle());
     }
 }
