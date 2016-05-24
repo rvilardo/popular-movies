@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">PopularMovies</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- Label for the sort mode preference [CHAR LIMIT=30] -->
+    <string name="pref_sort_label">Sort Mode</string>
+    <string name="pref_sort_label_most_popular">Most Popular</string>
+    <string name="pref_sort_label_top_rated">Top Rated</string>
+    <string name="pref_sort_key" translatable="false">sort_type</string>
+
+    <string name="title_movie_detail">Movie Details</string>
+</resources>

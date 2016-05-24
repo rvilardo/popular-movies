@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<fragment
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:name="org.rvilardo.android.popularmovies.fragment.MoviesFragment"
+        android:id="@+id/fragment"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        tools:layout="@layout/movies_fragment"/>
