@@ -27,7 +27,6 @@ import java.text.SimpleDateFormat;
 public class MovieDetailFragment extends Fragment implements MovieDetailListener {
 
     private final String LOG_TAG = MovieDetailFragment.class.getSimpleName();
-    private MovieDetail movieSelected = new MovieDetail();
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
 
     public static final String MOVIE = "MOVIE";
@@ -40,9 +39,7 @@ public class MovieDetailFragment extends Fragment implements MovieDetailListener
 
         Intent intent = getActivity().getIntent();
         if (intent != null && intent.hasExtra(MOVIE)) {
-            Movie movie = (Movie) intent.getSerializableExtra(MOVIE);
-            movieSelected.setId(movie.getId());
-            movieSelected.setPosterPath(movie.getPosterPath());
+            Movie movieSelected = (Movie) intent.getSerializableExtra(MOVIE);
 
             Log.v(LOG_TAG, "movieIdSelected =" + movieSelected.getId().toString());
 
