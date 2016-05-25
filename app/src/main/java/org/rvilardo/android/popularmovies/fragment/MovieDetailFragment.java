@@ -18,6 +18,8 @@ import org.rvilardo.android.popularmovies.bean.Movie;
 import org.rvilardo.android.popularmovies.bean.MovieDetail;
 import org.rvilardo.android.popularmovies.bean.MovieDetailListener;
 
+import java.text.SimpleDateFormat;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -26,6 +28,7 @@ public class MovieDetailFragment extends Fragment implements MovieDetailListener
 
     private final String LOG_TAG = MovieDetailFragment.class.getSimpleName();
     private MovieDetail movieSelected = new MovieDetail();
+    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
 
     public static final String MOVIE = "MOVIE";
 
@@ -41,7 +44,6 @@ public class MovieDetailFragment extends Fragment implements MovieDetailListener
             movieSelected.setId(movie.getId());
             movieSelected.setPosterPath(movie.getPosterPath());
 
-            ((TextView) rootView.findViewById(R.id.detail_text)).setText(movieSelected.getId().toString());
             Log.v(LOG_TAG, "movieIdSelected =" + movieSelected.getId().toString());
 
             new FetchMovieDetailTask(this).execute(movieSelected.getId());
@@ -58,5 +60,11 @@ public class MovieDetailFragment extends Fragment implements MovieDetailListener
     @Override
     public void onMovieDetailLoaded(MovieDetail movieDetail) {
         Log.v(LOG_TAG, "movieDetail=" + movieDetail.getOriginalTitle());
+
+        ((TextView) getActivity().findViewById(R.id.movie_item_detail_title)).setText(movieDetail.getOriginalTitle());
+        ((TextView) getActivity().findViewById(R.id.movie_item_detail_year)).setText(sdf.format(movieDetail.getReleaseDate()));
+        ((TextView) getActivity().findViewById(R.id.movie_item_detail_duration)).setText(String.format("%dmin", movieDetail.getRuntime()));
+        ((TextView) getActivity().findViewById(R.id.movie_item_detail_rating)).setText(String.format("%d/%d", movieDetail.getVoteAverage(),10));
+        ((TextView) getActivity().findViewById(R.id.movie_item_detail_description)).setText(movieDetail.getOverview());
     }
 }
