@@ -64,7 +64,7 @@ public class MovieDetailFragment extends Fragment implements MovieDetailListener
         ((TextView) getActivity().findViewById(R.id.movie_item_detail_title)).setText(movieDetail.getOriginalTitle());
         ((TextView) getActivity().findViewById(R.id.movie_item_detail_year)).setText(sdf.format(movieDetail.getReleaseDate()));
         ((TextView) getActivity().findViewById(R.id.movie_item_detail_duration)).setText(String.format("%dmin", movieDetail.getRuntime()));
-        ((TextView) getActivity().findViewById(R.id.movie_item_detail_rating)).setText(String.format("%d/%d", movieDetail.getVoteAverage(),10));
+        ((TextView) getActivity().findViewById(R.id.movie_item_detail_rating)).setText(String.format("%s/%d", movieDetail.getVoteAverage(),10));
         ((TextView) getActivity().findViewById(R.id.movie_item_detail_description)).setText(movieDetail.getOverview());
     }
 }
