@@ -2,7 +2,9 @@ package org.rvilardo.android.popularmovies.fragment;
 
 import android.app.Fragment;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +30,13 @@ public class MoviesFragment extends Fragment implements MovieListListener {
     private MovieAdapter movieAdapter;
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setHasOptionsMenu(true);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.movies_fragment, container, false);
         movieAdapter = new MovieAdapter(getActivity(), new ArrayList<Movie>());
@@ -51,12 +60,19 @@ public class MoviesFragment extends Fragment implements MovieListListener {
     @Override
     public void onStart() {
         super.onStart();
-        new FetchMoviesTask(this).execute(MoviesSortMode.MOST_POPULAR);
+        new FetchMoviesTask(this).execute(getSortMode());
     }
 
     @Override
     public void onMovieListLoaded(List<Movie> movies) {
         movieAdapter.clear();
         movieAdapter.addAll(movies);
+    }
+
+    private MoviesSortMode getSortMode() {
+        SharedPreferences s = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String sortMode = s.getString(getString(R.string.pref_sort_key),getString(R.string.pref_sort_default));
+
+        return MoviesSortMode.valueOf(sortMode.toUpperCase());
     }
 }
